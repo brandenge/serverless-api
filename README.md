@@ -34,6 +34,6 @@ This lab demonstrates how to create and deploy a serverless API using AWS API Ga
 
 #### Whiteboard
 
-Diagram created with [InVision](https://www.figma.com/)
+Diagram created with [Figma](https://www.figma.com/)
 
 #### Credits: [Demo code from Ryan Gallaway at Code Fellows](https://github.com/codefellows/seattle-code-javascript-401d48/tree/main/class-18/inclass-demo)
