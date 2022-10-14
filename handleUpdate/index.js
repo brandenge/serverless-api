@@ -2,23 +2,18 @@
 
 const dynamoose = require('dynamoose');
 
-const personSchema = new dynamoose.Schema({
+const peopleSchema = new dynamoose.Schema({
   id: String,
   name: String,
   phone: String,
 });
 
-const personModel = dynamoose.model('Person', personSchema);
+const personModel = dynamoose.model('people-demo', peopleSchema);
 
 exports.handler = async (event) => {
-  console.log('EVENT:', event);
-  console.log('EVENT BODY:', event.body);
-
-  const parsedBody = JSON.parse(event.body);
-  const { id, name, phone } = parsedBody;
-
+  const id = event.pathParameters.id.toString();
+  const { name, phone } = event.body;
   const person = { id, name, phone };
-  console.log('PERSON:', person);
 
   const response = {
     statusCode: null,
@@ -30,7 +25,7 @@ exports.handler = async (event) => {
     response.statusCode = 200;
     response.body = JSON.stringify(newPerson);
   } catch (e) {
-    console.log('ERROR IN HANDLE CREATE:', e);
+    console.log('ERROR IN HANDLE UPDATE:', e);
     response.statusCode = 500;
     response.body = JSON.stringify(e.message);
   }
