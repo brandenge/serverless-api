@@ -2,37 +2,30 @@
 
 const dynamoose = require('dynamoose');
 
-const personSchema = new dynamoose.Schema({
+const peopleSchema = new dynamoose.Schema({
   id: String,
   name: String,
   phone: String,
 });
 
-const personModel = dynamoose.model('Person', personSchema);
+const personModel = dynamoose.model('people-demo', peopleSchema);
 
 exports.handler = async (event) => {
-  console.log('EVENT:', event);
-  console.log('EVENT QUERY PARAMETERS:', event.queryStringParameters);
-  const pathId = event.pathParameters.id;
-
-  const { id, name, phone } = event.queryStringParameters;
-
-  const person = { id, name, phone };
-  console.log('PERSON:', person);
+  const id = event.pathParameters && event.pathParameters.id;
 
   const response = {
     statusCode: null,
     body: null,
   };
 
-  let personRecords;
   try {
-    if (pathId) personRecords = await personModel.scan().exec();
-    else personRecords = await personModel.scan(pathId).exec();
+    let personRecords;
+    if (id) personRecords = await personModel.get(id.toString());
+    else personRecords = await personModel.scan().exec();
     response.statusCode = 200;
     response.body = JSON.stringify(personRecords);
   } catch (e) {
-    console.log('ERROR IN HANDLE CREATE:', e);
+    console.log('ERROR IN HANDLE READ:', e);
     response.statusCode = 500;
     response.body = JSON.stringify(e.message);
   }

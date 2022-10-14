@@ -8,31 +8,33 @@
 
 This lab demonstrates how to create and deploy a serverless API using AWS API Gateway, Lambda, DynamoDB, and Dynamoose.
 
-- [CI/CD GitHub Actions](https://github.com/brandenge/serverless-api/actions)
-- [Deployed]()
-
-### Setup
-
-
-#### Running the app
-
+- [Root Deployed URL](https://zywkvgggmf.execute-api.us-east-2.amazonaws.com/prod)
 
 #### Features / Routes
 
-- POST : `/people`
-- GET : `/people`
-- GET : `/people/:id`
-- PUT : `/people/:id` - returns an object representing the object by id
-- DELETE : `/people/:id` - returns an empty object
+- POST : `/people` - returns the posted/created person record. Requires an valid object in the request body.
+- GET : `/people` - returns all people records
+- GET : `/people/:id` - returns a person's record by id
+- PUT : `/people/:id` - returns the updated person record by id
+- DELETE : `/people/:id` - returns 'Delete successful' if the delete by id is successful
 
-#### Processes
+#### Schema
 
+``` JavaScript
+{
+  "id": String,
+  "name": String,
+  "phone": String
+}
+```
 
 #### Tests
 
 - `npm test` to run tests
 
 #### Whiteboard
+
+![Serverless API](serverless-api.png)
 
 Diagram created with [Figma](https://www.figma.com/)
 

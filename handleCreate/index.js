@@ -2,23 +2,17 @@
 
 const dynamoose = require('dynamoose');
 
-const personSchema = new dynamoose.Schema({
+const peopleSchema = new dynamoose.Schema({
   id: String,
   name: String,
   phone: String,
 });
 
-const personModel = dynamoose.model('Person', personSchema);
+const personModel = dynamoose.model('people-demo', peopleSchema);
 
 exports.handler = async (event) => {
-  console.log('EVENT:', event);
-  console.log('EVENT BODY:', event.body);
-
-  const parsedBody = JSON.parse(event.body);
-  const { id, name, phone } = parsedBody;
-
+  const { id, name, phone } = event.body;
   const person = { id, name, phone };
-  console.log('PERSON:', person);
 
   const response = {
     statusCode: null,

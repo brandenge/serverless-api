@@ -2,23 +2,16 @@
 
 const dynamoose = require('dynamoose');
 
-const personSchema = new dynamoose.Schema({
+const peopleSchema = new dynamoose.Schema({
   id: String,
   name: String,
   phone: String,
 });
 
-const personModel = dynamoose.model('Person', personSchema);
+const personModel = dynamoose.model('people-demo', peopleSchema);
 
 exports.handler = async (event) => {
-  console.log('EVENT:', event);
-  console.log('EVENT BODY:', event.body);
-
-  const parsedBody = JSON.parse(event.body);
-  const { id, name, phone } = parsedBody;
-
-  const person = { id, name, phone };
-  console.log('PERSON:', person);
+  const id = (event.pathParameters.id).toString();
 
   const response = {
     statusCode: null,
@@ -26,11 +19,11 @@ exports.handler = async (event) => {
   };
 
   try {
-    const newPerson = await personModel.delete(person);
+    await personModel.delete(id);
     response.statusCode = 200;
-    response.body = JSON.stringify(newPerson);
+    response.body = 'Delete successful';
   } catch (e) {
-    console.log('ERROR IN HANDLE CREATE:', e);
+    console.log('ERROR IN HANDLE DELETE:', e);
     response.statusCode = 500;
     response.body = JSON.stringify(e.message);
   }
