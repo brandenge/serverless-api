@@ -11,8 +11,9 @@ const peopleSchema = new dynamoose.Schema({
 const personModel = dynamoose.model('people-demo', peopleSchema);
 
 exports.handler = async (event) => {
+  const parsedBody = JSON.parse(event.body);
   const id = event.pathParameters.id.toString();
-  const { name, phone } = event.body;
+  const { name, phone } = parsedBody;
   const person = { id, name, phone };
 
   const response = {
